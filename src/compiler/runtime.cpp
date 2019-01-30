@@ -21,7 +21,7 @@ void print_map(map<K,V> m)
 }
 
 
-void assert(bool assertion, string message) {
+void assertion(bool assertion, string message) {
     if (not assertion) {
         cout << "Error: " << message << endl;
         exit(1);
@@ -86,7 +86,7 @@ struct Object {
             case GetAttr: this->set_contents(10); break;
             case SetAttr: this->set_contents(11); break;
             case Pass: this->set_contents(12); break;
-            default: assert(false, "Invalid instruction"); break;
+            default: assertion(false, "Invalid instruction"); break;
         }
         this->type = Instruction;
     }
@@ -193,6 +193,8 @@ struct Object {
             case None:
                 cout << "None";
                 break;
+                
+            default: break;
         }
     }
 
@@ -202,10 +204,10 @@ struct Object {
     }
 
     friend Object operator+(Object a, Object b) {
-        assert(
+        assertion(
             a.get_type() == b.get_type(), "Tried to add objects of two different types"
         );
-        assert(
+        assertion(
             a.get_type() == String || a.get_type() == Number || a.get_type() == List,
             "Tried to add objects not of type String, Number, or List"
         );
@@ -222,14 +224,17 @@ struct Object {
                     concat_vector(a.as_list(), b.as_list())
                     );
                 break;
+            default:
+                return Object();
+                break;
         }
     }
 
     friend Object operator-(Object a, Object b) {
-        assert(
+        assertion(
             a.get_type() == b.get_type(), "Tried to subtract objects of two different types"
         );
-        assert(
+        assertion(
             a.get_type() == Number,
             "Tried to subtract non-Number"
         );
@@ -238,11 +243,11 @@ struct Object {
     }
 
     friend Object operator*(Object a, Object b) {
-        assert(
+        assertion(
             a.get_type() == b.get_type(), "Tried to multiply objects of two different types"
         );
 
-        assert(
+        assertion(
             a.get_type() == Number,
             "Tried to multiply non-Number"
         );
@@ -251,11 +256,11 @@ struct Object {
     }
 
     friend Object operator/(Object a, Object b) {
-        assert(
+        assertion(
             a.get_type() == b.get_type(), "Tried to divide objects of two different types"
         );
 
-        assert(
+        assertion(
             a.get_type() == Number,
             "Tried to divide non-Number"
         );
@@ -264,11 +269,11 @@ struct Object {
     }
 
     friend Object operator%(Object a, Object b) {
-        assert(
+        assertion(
             a.get_type() == b.get_type(), "Tried to divide objects of two different types"
         );
 
-        assert(
+        assertion(
             a.get_type() == Number,
             "Tried to divide non-Number"
         );
@@ -311,7 +316,7 @@ struct Scope {
         } 
         // else, check inner scope
         else {
-            assert(!this->is_bottom_scope(), name + " not defined");
+            assertion(!this->is_bottom_scope(), name + " not defined");
             return this->outer_scope->get(name);
         }
     }
