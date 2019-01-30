@@ -1,0 +1,20 @@
+
+
+class Sprite(path) [
+    set_image_path(self, path) [
+        self.image_path = path
+    ]
+
+    draw(self) [
+        print("Hello oop!")
+    ]
+
+    self.set_image_path(path)
+]
+
+
+
+s = Sprite("lmao doesnt matter")
+
+print(s.image_path)
+
