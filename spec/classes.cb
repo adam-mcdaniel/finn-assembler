@@ -1,16 +1,16 @@
 
 
-class Sprite(path) [
-    set_image_path(self, path) [
+class Sprite(path) {
+    fn set_image_path(self, path) {
         self.image_path = path
-    ]
+    }
 
-    draw(self) [
+    fn draw(self) {
         print("Hello oop!")
-    ]
+    }
 
     self.set_image_path(path)
-]
+}
 
 
 
