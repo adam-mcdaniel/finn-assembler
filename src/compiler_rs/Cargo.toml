@@ -1,0 +1,16 @@
+[package]
+name = "compiler_rs"
+version = "0.1.0"
+authors = ["adam"]
+edition = "2018"
+
+[dependencies]
+bigdecimal = "0.0.15"
+
+[lib]
+name = "cable_lang"
+path = "src/lib.rs"
+
+[[bin]]
+name = "cable_lang"
+path = "src/bin.rs"
