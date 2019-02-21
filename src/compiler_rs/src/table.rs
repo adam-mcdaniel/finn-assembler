@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::option::*;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Table<T> {
     contents: HashMap<String, T>
 }

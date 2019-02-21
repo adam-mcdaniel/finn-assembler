@@ -9,7 +9,7 @@ type Contents = Vec<BigDecimal>;
 pub const NOTHING : &[BigDecimal] = &[];
 
 
-pub fn to_decimal(num: f64) -> BigDecimal {
+fn to_decimal(num: f64) -> BigDecimal {
     return BigDecimal::from_str(&num.to_string()).unwrap()
 }
 
@@ -30,7 +30,12 @@ fn from_number(number: BigDecimal) -> Contents {
 }
 
 
-#[derive(Debug, Copy, Clone)]
+pub fn num_from_str(number: &str) -> BigDecimal {
+    BigDecimal::from_str(number).unwrap()
+}
+
+
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Instruction {
     Print,
     Println,
@@ -48,13 +53,20 @@ pub enum Instruction {
     Pass
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum Problem {
+    IncompatibleTypes,
+    ValueError,
+}
+
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Type {
     Str,
     Num,
     List,
     Function,
     Instance,
+    Problem(Problem),
     Nothing,
     Command(Instruction)
 }
@@ -80,10 +92,25 @@ pub trait Object: Sized + Clone + Debug + Display + Add + Sub + Mul + Div + Rem 
         return Self::new(Type::Num, from_number(decimal));
     }
 
+    fn from_instruction(instruction: Instruction) -> Self {
+        return Self::new(Type::Command(instruction), NOTHING.to_vec());
+    }
+
+    fn from_problem(problem: Problem) -> Self {
+        return Self::new(Type::Problem(problem), NOTHING.to_vec());
+    }
+
     fn from_vector(vector: Vec<Self>) -> Self {
         let mut instance = Self::new(Type::List, NOTHING.to_vec());
         instance.set_list(vector);
         return instance;
+    }
+
+    fn from_nothing() -> Self {
+        Self::new(
+            Type::Nothing,
+            NOTHING.to_vec()
+            )
     }
 
     fn from_foreign_function(function: fn(Self) -> Self) -> Self {
@@ -213,7 +240,9 @@ pub trait Object: Sized + Clone + Debug + Display + Add + Sub + Mul + Div + Rem 
             },
             Type::Function => format!("Function"),
             Type::Nothing => format!("None"),
+            Type::Problem(p) => format!("{:?}", p),
             Type::Command(c) => format!("{:?}", c),
+            _ => "".to_string()
         }
     }
 
@@ -227,7 +256,7 @@ pub trait Object: Sized + Clone + Debug + Display + Add + Sub + Mul + Div + Rem 
 }
 
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Value {
     value_type: Type,
     function: fn(Self) -> Self,
@@ -247,13 +276,29 @@ impl Display for Value {
 impl Add for Value {
     type Output = Value;
     fn add(self, rhs: Self) -> Self::Output {
-        return Value::from_number(self.as_number() + rhs.as_number())
+        if self.value_type != rhs.value_type {
+            return Value::from_problem(Problem::IncompatibleTypes);
+        }
+
+        match self.value_type {
+            Type::Num => Value::from_number(self.as_number() + rhs.as_number()),
+            Type::Str => Value::from_string(self.as_string() + &rhs.as_string()),
+            _ => Value::from_problem(Problem::ValueError)
+        }
     }
 }
 
 impl Sub for Value {
     type Output = Value;
     fn sub(self, rhs: Self) -> Self::Output {
+        if self.value_type != rhs.value_type {
+            return Value::from_problem(Problem::IncompatibleTypes);
+        }
+
+        if self.value_type != Type::Num {
+            return Value::from_problem(Problem::ValueError);
+        }
+
         return Value::from_number(self.as_number() - rhs.as_number())
     }
 }
@@ -261,6 +306,14 @@ impl Sub for Value {
 impl Mul for Value {
     type Output = Value;
     fn mul(self, rhs: Self) -> Self::Output {
+        if self.value_type != rhs.value_type {
+            return Value::from_problem(Problem::IncompatibleTypes);
+        }
+
+        if self.value_type != Type::Num {
+            return Value::from_problem(Problem::ValueError);
+        }
+
         return Value::from_number(self.as_number() * rhs.as_number())
     }
 }
@@ -268,6 +321,14 @@ impl Mul for Value {
 impl Div for Value {
     type Output = Value;
     fn div(self, rhs: Self) -> Self::Output {
+        if self.value_type != rhs.value_type {
+            return Value::from_problem(Problem::IncompatibleTypes);
+        }
+
+        if self.value_type != Type::Num {
+            return Value::from_problem(Problem::ValueError);
+        }
+
         return Value::from_number(self.as_number() / rhs.as_number())
     }
 }
@@ -275,6 +336,14 @@ impl Div for Value {
 impl Rem for Value {
     type Output = Value;
     fn rem(self, rhs: Self) -> Self::Output {
+        if self.value_type != rhs.value_type {
+            return Value::from_problem(Problem::IncompatibleTypes);
+        }
+
+        if self.value_type != Type::Num {
+            return Value::from_problem(Problem::ValueError);
+        }
+
         return Value::from_number(self.as_number() % rhs.as_number())
     }
 }
