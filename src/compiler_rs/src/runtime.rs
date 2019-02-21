@@ -1,4 +1,5 @@
 use crate::object::*;
+use crate::value::*;
 use crate::table::Table;
 
 #[derive(Debug, Clone)]
@@ -21,24 +22,27 @@ impl Scope {
         }
     }
 
-    pub fn is_bottom_scope(&self) -> bool {
+    fn is_bottom_scope(&self) -> bool {
         match self.outer_scope {
             Some(_) => true,
             None => false
         }
     }
 
-    pub fn define(&mut self, name: String, object: Pair<Value, Scope>) {
+    fn define(&mut self, name: String, object: Pair<Value, Scope>) {
         self.table.set(name, object)
     }
 
-    pub fn get(&mut self, name: String) -> Pair<Value, Scope> {
+    fn get(&mut self, name: String) -> Pair<Value, Scope> {
         match self.table.get(name.clone()) {
             Some(v) => return v,
             None => {
                 // if !self.is_bottom_scope() {
                 // }
-                (*self.outer_scope.clone().unwrap()).get(name)
+                (*match self.outer_scope.clone() {
+                    Some(v) => v,
+                    None => return Pair{first: Value::from_nothing(), second: Scope::new(None)}
+                }).get(name)
             }
         }
     }
@@ -139,65 +143,18 @@ impl StackFrame {
         }
     }
 
-    // void run() {
-    //     pair<Object, Scope> object_and_scope;
-    //     Object object;
-    //     Object data;
-    //     string name;
-    //     for (Object instruction : this->instructions.as_list()) {
-    //         switch (instruction.get_type()) {
-    //             case Instruction:
-    //                 switch (int(instruction.as_number())) {
-    //                     case 0: this->pop_value().print(); break;
-    //                     case 1: this->pop_value().println(); break;
-    //                     case 2: this->push(this->pop_value() + this->pop_value()); break;
-    //                     case 3: this->push(this->pop_value() * this->pop_value()); break;
-    //                     case 4: this->push(this->pop_value() - this->pop_value()); break;
-    //                     case 5: this->push(this->pop_value() / this->pop_value()); break;
-    //                     case 6: this->push(this->pop_value() % this->pop_value()); break;
-    //                     case 7: this->call(this->pop()); break;
-    //                     case 8:
-    //                         // object_and_scope = this->load(this->pop().as_string());
-    //                         this->push(this->load(this->pop_value().as_string())); break;
-    //                     case 9: this->store(this->pop(), this->pop_value().as_string()); break;
-    //                     case 10:
-    //                         name = this->pop_value().as_string();
-    //                         object = this->pop_value();
-    //                         this->push(object.get_attr(name));
-    //                         break;
-    //                     case 11:
-    //                         name = this->pop_value().as_string();
-    //                         data = this->pop_value();
-    //                         object = this->pop_value();
-    //                         object.set_attr(data, name);
-    //                         this->push(object);
-    //                         break;
-    //                     case 12: break;
-    //                 }
-    //                 break;
-
-    //             default:
-    //                 // cout << "data: ";
-    //                 // instruction.println();
-    //                 // cout << "type: " << instruction.get_type() << endl;
-    //                 this->push(instruction);
-    //                 break;
-    //         }
-    //     }
-    // }
-
-    pub fn is_empty(&self) -> bool {
+    fn is_empty(&self) -> bool {
         self.contents.len() == 0
     }
 
-    pub fn has_outer_stack(&self) -> bool {
+    fn has_outer_stack(&self) -> bool {
         match self.outer_stack {
             Some(_) => true,
             None => false
         }
     }
 
-    pub fn call(&mut self, object_and_scope: Pair<Value, Scope>) {
+    fn call(&mut self, object_and_scope: Pair<Value, Scope>) {
         let mut s = StackFrame::new(
             Some(Box::new(self.clone())),
             object_and_scope.second,
@@ -210,40 +167,50 @@ impl StackFrame {
         }
     }
 
-    pub fn load(&mut self, name: String) -> Pair<Value, Scope> {
+    fn load(&mut self, name: String) -> Pair<Value, Scope> {
         self.scope.get(name)
     }
 
-    pub fn store(&mut self, name: String, object: Pair<Value, Scope>) {
+    fn store(&mut self, name: String, object: Pair<Value, Scope>) {
         self.scope.define(name, object)
     }
 
-    pub fn push(&mut self, object_and_scope: Pair<Value, Scope>) {
+    fn push(&mut self, object_and_scope: Pair<Value, Scope>) {
         self.contents.push(object_and_scope);
     }
 
-    pub fn push_value(&mut self, object: Value) {
+    fn push_value(&mut self, object: Value) {
         self.contents.push(Pair {
             first: object,
             second: self.scope.clone()
         });
     }
 
-    pub fn pop(&mut self) -> Pair<Value, Scope> {
+    fn pop(&mut self) -> Pair<Value, Scope> {
         if self.is_empty() && self.has_outer_stack() {
-            self.outer_stack.clone().unwrap().pop()
+            match &mut self.outer_stack.clone() {
+                Some(s) => s.pop(),
+                None => return Pair{first: Value::from_nothing(), second: Scope::new(None)}
+            }
         } else {
 
-            let back: Pair<Value, Scope> = self.contents.last().unwrap().clone();
+            let back: Pair<Value, Scope> = match self.contents.last() {
+                Some(v) => v.clone(),
+                None => return Pair{first: Value::from_nothing(), second: Scope::new(None)}
+            };
+            
             self.contents.pop();
             back.clone()
         }
     }
 
 
-    pub fn pop_value(&mut self) -> Value {
+    fn pop_value(&mut self) -> Value {
         if self.is_empty() && self.has_outer_stack() {
-            self.outer_stack.clone().unwrap().pop().first
+            match &mut self.outer_stack.clone() {
+                Some(s) => s.pop().first,
+                None => return Value::from_nothing()
+            }
 
         } else {
             let back: Pair<Value, Scope> = self.contents.last().unwrap().clone();

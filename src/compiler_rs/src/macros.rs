@@ -55,6 +55,13 @@ macro_rules! float64 {
     )
 }
 
+
+use bigdecimal::*;
+use std::str::FromStr;
+fn num_from_str(number: &str) -> BigDecimal {
+    BigDecimal::from_str(number).unwrap()
+}
+
 #[allow(unused_macros)]
 macro_rules! num {
     ($value:expr) => (

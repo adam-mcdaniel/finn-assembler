@@ -1,6 +1,6 @@
 [package]
 name = "compiler_rs"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["adam"]
 edition = "2018"
 
@@ -14,3 +14,7 @@ path = "src/lib.rs"
 [[bin]]
 name = "cable_lang"
 path = "src/bin.rs"
+
+
+[profile.release]
+opt-level = 3

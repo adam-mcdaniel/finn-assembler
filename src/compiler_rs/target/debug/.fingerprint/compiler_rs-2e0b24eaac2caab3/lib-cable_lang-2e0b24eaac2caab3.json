@@ -1,0 +1,1 @@
+{"rustc":5105358705442676925,"features":"[]","target":6718972536586830822,"profile":11599678936156810257,"path":10872709659218687626,"deps":[["bigdecimal v0.0.15","bigdecimal",12507381594966986896]],"local":[{"MtimeBased":[[1550730120,729631937],".fingerprint/compiler_rs-2e0b24eaac2caab3/dep-lib-cable_lang-2e0b24eaac2caab3"]}],"rustflags":[],"edition":"Edition2018"}
