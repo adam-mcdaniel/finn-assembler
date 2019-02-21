@@ -1,1 +1,0 @@
-{"rustc":5105358705442676925,"features":"[]","target":6718972536586830822,"profile":5060393583489210841,"path":10872709659218687626,"deps":[["bigdecimal v0.0.15","bigdecimal",3849078342476531910]],"local":[{"MtimeBased":[[1550730611,83070652],".fingerprint/compiler_rs-fba17a416fc374bb/dep-lib-cable_lang-fba17a416fc374bb"]}],"rustflags":[],"edition":"Edition2018"}

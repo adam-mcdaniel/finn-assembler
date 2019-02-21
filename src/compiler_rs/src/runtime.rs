@@ -53,6 +53,7 @@ pub struct StackFrame {
     scope: Scope,
     contents: Vec<Pair<Value, Scope>>,
     instructions: Value,
+    outer_pops: i32,
     outer_stack: Option<Box<StackFrame>>
 }
 
@@ -62,6 +63,7 @@ impl StackFrame {
             scope,
             contents: vec![],
             instructions,
+            outer_pops: 0,
             outer_stack
         }
     }
@@ -71,6 +73,7 @@ impl StackFrame {
             scope: Scope::new(None),
             contents: vec![],
             instructions,
+            outer_pops: 0,
             outer_stack: None
         }
     }
@@ -162,6 +165,10 @@ impl StackFrame {
         );
 
         s.run();
+        for x in 0..s.outer_pops {
+            self.pop();
+        }
+
         while !s.is_empty() {
             self.push(s.pop());
         }
@@ -188,8 +195,11 @@ impl StackFrame {
 
     fn pop(&mut self) -> Pair<Value, Scope> {
         if self.is_empty() && self.has_outer_stack() {
-            match &mut self.outer_stack.clone() {
-                Some(s) => s.pop(),
+            match &mut self.outer_stack {
+                Some(s) => {
+                    self.outer_pops += 1;
+                    s.pop()
+                },
                 None => return Pair{first: Value::from_nothing(), second: Scope::new(None)}
             }
         } else {
@@ -204,14 +214,15 @@ impl StackFrame {
         }
     }
 
-
     fn pop_value(&mut self) -> Value {
         if self.is_empty() && self.has_outer_stack() {
-            match &mut self.outer_stack.clone() {
-                Some(s) => s.pop().first,
+            match &mut self.outer_stack {
+                Some(s) => {
+                    self.outer_pops += 1;
+                    s.pop().first
+                },
                 None => return Value::from_nothing()
             }
-
         } else {
             let back: Pair<Value, Scope> = self.contents.last().unwrap().clone();
             self.contents.pop();

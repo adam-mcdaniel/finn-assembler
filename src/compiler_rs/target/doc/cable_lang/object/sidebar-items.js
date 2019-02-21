@@ -1,1 +1,0 @@
-initSidebarItems({"constant":[["NOTHING",""]],"enum":[["Instruction",""],["Problem",""],["Type",""]],"trait":[["Object",""]],"type":[["Contents",""]]});

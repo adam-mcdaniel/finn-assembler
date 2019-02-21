@@ -1,10 +1,10 @@
 #[allow(dead_code, unused_imports)]
-use cable_lang::object::*;
-use cable_lang::object::Instruction::*;
-use cable_lang::value::*;
+use hlvm::object::*;
+use hlvm::object::Instruction::*;
+use hlvm::value::*;
 
 #[allow(dead_code, unused_imports)]
-use cable_lang::runtime::*;
+use hlvm::runtime::*;
 
 
 use std::io;
@@ -52,44 +52,26 @@ fn main() {
 
     StackFrame::from_instructions(
         list!([
-            // float64!(5.0),
-            // string!("test"),
-            // ins!(Add),
-            // ins!(Println),
-
-            num!("4.0"),
-            string!("a"),
-            ins!(Store),
-            string!("a"),
-            ins!(Load),
-            ins!(Println),
-            num!("5.0"),
-            string!("a"),
-            ins!(Store),
-            string!("a"),
-            ins!(Load),
-            ins!(Println),
-            
-            string!("Hello"),
-            inline_foreign_function!(x, {x + string!(" world!")}),
-            ins!(Execute),
-            ins!(Println),
-
-            num!("345678907654.34567898765432"),
-            wrap_foreign_function!(cube),
-            ins!(Execute),
-            string!("the cube is: \""),
-            ins!(Print),
-            ins!(Print),
-            string!("\""),
-            ins!(Println),
-            num!("345678907654.34567898765432"),
-            wrap_foreign_function!(half),
-            ins!(Execute),
-            string!("the half is: \""),
-            ins!(Print),
-            ins!(Print),
-            string!("\""),
+            num!("1"),
+            num!("2"),
+            num!("27"),
+            list!([
+                string!("a"),
+                ins!(Store),
+                list!([
+                    string!("b"),
+                    ins!(Store),
+                    list!([
+                        string!("c"),
+                        ins!(Store),
+                        string!("c"),
+                        ins!(Load),
+                    ]),
+                    ins!(Call)
+                ]),
+                ins!(Call)
+            ]),
+            ins!(Call),
             ins!(Println),
         ])
     ).run();

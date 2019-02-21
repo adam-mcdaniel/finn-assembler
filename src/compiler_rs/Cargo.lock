@@ -11,8 +11,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "compiler_rs"
-version = "0.2.0"
+name = "hlvm"
+version = "0.3.0"
 dependencies = [
  "bigdecimal 0.0.15 (registry+https://github.com/rust-lang/crates.io-index)",
 ]

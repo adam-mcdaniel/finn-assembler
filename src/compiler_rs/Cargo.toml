@@ -1,6 +1,6 @@
 [package]
-name = "compiler_rs"
-version = "0.2.0"
+name = "hlvm"
+version = "0.3.0"
 authors = ["adam"]
 edition = "2018"
 
@@ -8,11 +8,11 @@ edition = "2018"
 bigdecimal = "0.0.15"
 
 [lib]
-name = "cable_lang"
+name = "hlvm"
 path = "src/lib.rs"
 
 [[bin]]
-name = "cable_lang"
+name = "hlvm"
 path = "src/bin.rs"
 
 
