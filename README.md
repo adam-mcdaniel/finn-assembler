@@ -1,2 +1,2 @@
 # cable-lang
-A dynamically typed, multi-paradigm, statically compiled programming language
+A dynamically typed, multi-paradigm programming language

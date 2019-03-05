@@ -1,0 +1,8 @@
+[package]
+name = "cable-lang"
+version = "0.1.0"
+authors = ["adam"]
+edition = "2018"
+
+[dependencies]
+hlvm = "0.4.1"

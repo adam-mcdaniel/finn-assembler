@@ -1,0 +1,9 @@
+[package]
+name = "test-lang"
+version = "0.1.0"
+authors = ["adam-mcdaniel <adam.mcdaniel17@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+hlvm = {path="../hlvm", version="0.5.0"}
+# hlvm = "0.5.0"
