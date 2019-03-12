@@ -1,4 +1,4 @@
-# finn-assembler
+# Finn-Assembler
 The assembler for the Finn IR implemented using my HLVM in Rust
 
 # Finn IR
