@@ -50,8 +50,8 @@ A dynamically typed, multi-paradigm programming language
 
 ### Lambda Calculus
 ```rust
-{a= {b= a}} True = 
-{a= {b= b}} False = 
+{a= {b= a}} True= 
+{a= {b= b}} False= 
 
 {p= {q= p q p!!}} And=
 
