@@ -15,6 +15,9 @@ Finn IR can import Rust functions extremely easily, but I haven't added an inclu
 This is an example of the compiled Rust source that implements a foreign function.
 
 ```rust
+#[allow(unused_imports)]
+use hlvm::function::{Fun, Value, Object, ForeignFunction, string}; 
+
 
 use std::io;
 use std::io::Write;
