@@ -47,7 +47,7 @@ version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
-name = "test_lang"
+name = "output"
 version = "0.1.0"
 dependencies = [
  "hlvm 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",

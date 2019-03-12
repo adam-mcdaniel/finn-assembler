@@ -1,5 +1,5 @@
 [package]
-name = "test_lang"
+name = "output"
 version = "0.1.0"
 authors = ["adam-mcdaniel <adam.mcdaniel17@gmail.com>"]
 edition = "2018"

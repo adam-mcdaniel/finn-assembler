@@ -1,7 +1,7 @@
-./target/release/finn-assembler "$(< ${1})" > test_lang/src/main.rs
+./target/release/finn-assembler "$(< ${1})" > output/src/main.rs
 
-cd test_lang
+cd output
 cargo build --release
 # cargo rustc --release -- -C target-cpu=native
-time ./target/release/test_lang
+time ./target/release/output
 cd ..

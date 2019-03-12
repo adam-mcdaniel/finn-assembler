@@ -37,7 +37,7 @@ fn main() {
         .add_fun(Fun::new().not()).store("not")
     
     // START USER PROGRAM
-    .add_fun(Fun::new().store("a").add_fun(Fun::new().store("b").load("a"))).store("True").add_fun(Fun::new().store("a").add_fun(Fun::new().store("b").load("b"))).store("False").add_fun(Fun::new().store("p").add_fun(Fun::new().store("q").load("p").load("q").load("p").call_from_stack().call_from_stack())).store("And").add_fun(Fun::new().add_str("is false!").load("println").call_from_stack()).add_fun(Fun::new().add_str("is true!").load("println").call_from_stack()).load("True").load("True").load("And").call_from_stack().call_from_stack().call_from_stack().call_from_stack().call_from_stack().run()
+    .add_num("0").store("n").add_fun(Fun::new().add_num("1").load("n").add().store("n").add_fun(Fun::new().store("a").add_fun(Fun::new().store("b").load("a"))).store("True").add_fun(Fun::new().store("a").add_fun(Fun::new().store("b").load("b"))).store("False").add_fun(Fun::new().store("p").add_fun(Fun::new().store("q").load("p").load("q").load("p").call_from_stack().call_from_stack())).store("And").add_fun(Fun::new().add_str("is false!").load("println").call_from_stack()).add_fun(Fun::new().add_str("is true!").load("println").call_from_stack()).load("True").load("True").load("And").call_from_stack().call_from_stack().call_from_stack().call_from_stack().call_from_stack().add_str("n is ").load("print").call_from_stack().load("n").load("println").call_from_stack()).add_fun(Fun::new().add_num("1000").load("n").less()).while_function().run()
     
     // END USER PROGRAM
 }
