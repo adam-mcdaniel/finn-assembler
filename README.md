@@ -7,7 +7,7 @@ Finn IR is a minimal language that is meant to be targetted by other languages.
 
 It compiles to Rust, which is then compiled to a binary.
 
-Finn IR can import Rust functions extremely easy, but I haven't added an include function / opcode yet, so you can't just include your crate. However, you can edit the source and test it for yourself.
+Finn IR can import Rust functions extremely easily, but I haven't added an include function / opcode yet, so you can't just include your crate. However, you can edit the source and test it for yourself.
 
 
 ## Foreign Function Interface
