@@ -1,16 +1,28 @@
-
-0 n=
-{
-    1 n + n=
-
-    {a= {b= a}} True = 
-    {a= {b= b}} False = 
-
-    {p= {q= p q p!!}} And=
-
-
-    { "is false!" println! } { "is true!" println! } True True And!!!!!
-    
-    
+{ 
+    n=
     "n is " print! n println!
-} {1000 n <} &
+
+    {
+        1
+    } {
+        1 n- factorial! n*
+    } 1 n > ? ! total=
+
+    total
+} factorial=
+
+
+{ 
+    n=
+    1 total=
+    {
+        total n* total=
+
+        1 n- n=
+    } {1 n >} &
+
+    total
+} factorial=
+
+
+10000 factorial! println!

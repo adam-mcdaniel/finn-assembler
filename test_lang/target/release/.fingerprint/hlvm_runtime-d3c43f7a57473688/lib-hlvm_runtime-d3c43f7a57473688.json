@@ -1,0 +1,1 @@
+{"rustc":15213319881204273412,"features":"[]","target":4923713007430632138,"profile":10444331308365904205,"path":13930337333946577291,"deps":[["bigdecimal v0.0.15","bigdecimal",1819545148390405810]],"local":[{"Precalculated":"0.3.0"}],"rustflags":["-C","target-cpu=native"],"edition":"Edition2018"}

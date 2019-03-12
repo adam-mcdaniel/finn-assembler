@@ -55,6 +55,7 @@ fn get_input(prompt: &str) -> String {{
     input.trim().to_string()
 }}
 
+#[allow(unused_variables)]
 fn main() {{
     
     let input: ForeignFunction = |v| {{
