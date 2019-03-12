@@ -1,8 +1,9 @@
 [package]
-name = "cable-lang"
+name = "finn-assembler"
 version = "0.1.0"
 authors = ["adam"]
 edition = "2018"
 
 [dependencies]
-hlvm = "0.4.1"
+hlvm = "0.5.0"
+regex = "1"

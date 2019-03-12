@@ -1,0 +1,1 @@
+./target/release/finn-assembler "$(< ${1})" > test_lang/src/main.rs; cd test_lang; cargo build --release; time ./target/release/test_lang; cd ..
