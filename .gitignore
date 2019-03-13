@@ -1,2 +1,4 @@
 /target
 **/*.rs.bk
+/hlvm
+/hlvm_runtime
