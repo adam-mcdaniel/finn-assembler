@@ -1,0 +1,23 @@
+{
+    $ self= 
+    
+    {
+        self=
+
+        "test" println!
+        
+        "hey jude" self a.b.c.d.test. < self=
+
+        self
+    } self a.b.c.d.test. < self =
+
+    self println!
+
+    self
+} ! o =
+
+
+o o a.b.c.d.test. > ! o =
+
+
+o println!

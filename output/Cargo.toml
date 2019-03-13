@@ -5,8 +5,10 @@ authors = ["adam-mcdaniel <adam.mcdaniel17@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-hlvm = "0.6.0"
+hlvm = "0.7.0"
+# hlvm = {path="../hlvm", version="0.6"}
 
+num-traits = "*" # 29.659s
 
 
 [profile.release]

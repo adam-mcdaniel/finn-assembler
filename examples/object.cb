@@ -1,0 +1,36 @@
+{
+    $ self=
+
+    x= y=
+    x self x. < self=
+    y self y. < self=
+
+    {
+        self= dx= dy=
+
+        self x. > dx + self x. < self=
+        self y. > dy + self y. < self=
+
+        self
+    } self move. < self=
+
+    {
+        self=
+
+        "self.x " print! self x. > println!
+        "self.y " print! self y. > println!
+
+        self
+    } self println. < self=
+
+    self
+
+} Sprite=
+
+
+0 20 Sprite ! s=
+s s println. > !
+
+
+1 5 0- s s move. > ! s=
+s s println. > !

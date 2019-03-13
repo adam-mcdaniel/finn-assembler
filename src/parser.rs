@@ -5,27 +5,27 @@ use crate::tokenizer::Token::*;
 
 
 pub fn number(s: &str) -> String {
-    format!(".add_num(\"{}\")", s).clone()
+    format!("\n\t\t.add_num(\"{}\")", s).clone()
 }
 
 pub fn string(s: &str) -> String {
-    format!(".add_str({})", s).clone()
+    format!("\n\t\t.add_str({})", s).clone()
 }
 
 pub fn store(s: &str) -> String {
-    format!(".store(\"{}\")", s).clone()
+    format!("\n\t\t.store(\"{}\")", s).clone()
 }
 
 pub fn load(s: &str) -> String {
-    format!(".load(\"{}\")", s).clone()
+    format!("\n\t\t.load(\"{}\")", s).clone()
 }
 
 pub fn conditional() -> String {
-    ".if_function()".to_string()
+    "\n\t\t.if_function()".to_string()
 }
 
 pub fn while_loop() -> String {
-    ".while_function()".to_string()
+    "\n\t\t.while_function()".to_string()
 }
 
 pub fn begin_args() -> String {
@@ -37,7 +37,7 @@ pub fn end_args() -> String {
 }
 
 pub fn begin_function() -> String {
-    ".add_fun(Fun::new()".to_string()
+    "\n\t\t.add_fun(Fun::new()".to_string()
 }
 
 pub fn end_function() -> String {
@@ -45,16 +45,19 @@ pub fn end_function() -> String {
 }
 
 pub fn call() -> String {
-    ".call_from_stack()".to_string()
+    "\n\t\t.call_from_stack()".to_string()
 }
 
 pub fn load_foreign_function(name: &str) -> String {
-    format!(".add_foreign_fun({})", name)
+    format!("\n\t\t.add_foreign_fun({})", name)
 }
 
 
 
+pub fn get_attr() -> String {"\n\t\t.get_attr()".to_string()}
+pub fn set_attr() -> String {"\n\t\t.set_attr()".to_string()}
 
+pub fn instance() -> String {"\n\t\t.add_obj()".to_string()}
 pub fn add() -> String {".add()".to_string()}
 pub fn sub() -> String {".sub()".to_string()}
 pub fn mul() -> String {".mul()".to_string()}
@@ -77,7 +80,7 @@ pub fn greater() -> String {".greater()".to_string()}
 pub fn compile_tokens(tokens: Vec<Token>) -> String {
     // println!("{:?}", tokens);
     let mut result = "".to_string();
-    
+    let mut in_attrs = false;
     let mut should_continue = false;
     for i in (0..tokens.len()) {
 
@@ -103,10 +106,27 @@ pub fn compile_tokens(tokens: Vec<Token>) -> String {
                         result += load_foreign_function(s).as_ref();
                         should_continue = true;
                     },
+                    Dot => {
+                        result += string(&("\"".to_string() + s + "\"")).as_ref();
+                        should_continue = true;
+                    },
                     _ => {
+                        // match tokens[(i-1) as usize] {
+                        //     Dot => result += string(&("\"".to_string() + s + "\"")).as_ref(),
+                        //     _ => result += load(s).as_ref()
+                        // };
                         result += load(s).as_ref();
                     }
                 }
+            },
+            GetAttr => {
+                result += &get_attr();
+            },
+            SetAttr => {
+                result += &set_attr();
+            },
+            Instance => {
+                result += &instance();
             },
             While => {
                 result += &while_loop();

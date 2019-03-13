@@ -35,7 +35,6 @@ fn main() {
     //     ).compile()
     // );
 
-    // println!("{:?}", tokenize("a; println !;"));
 
 
     println!(
@@ -87,4 +86,19 @@ fn main() {{
             tokenize(&(env::args().collect::<Vec<_>>()[1]).to_string())
             )
     );
+    // println!("
+    // Fun::new()
+    //     .add_fun(Fun::new().print()).store(\"print\")
+    //     .add_fun(Fun::new().println()).store(\"println\")
+    //     .add_fun(Fun::new().add()).store(\"add\")
+    //     .add_fun(Fun::new().sub()).store(\"sub\")
+    //     .add_fun(Fun::new().mul()).store(\"mul\")
+    //     .add_fun(Fun::new().div()).store(\"div\")
+    //     .add_fun(Fun::new().less()).store(\"less\")
+    //     .add_fun(Fun::new().greater()).store(\"greater\")
+    //     .add_fun(Fun::new().eq()).store(\"eq\")
+    //     .add_fun(Fun::new().eq().not()).store(\"noteq\")
+    //     .add_fun(Fun::new().not()).store(\"not\")
+        
+    //     {}.run();", compile_tokens(tokenize("\"\" a= a<b 1 a println!")));
 }

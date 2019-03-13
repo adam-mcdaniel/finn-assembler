@@ -13,10 +13,10 @@
         c println!
 
         1 n-n=
-    } {1 n >} &
+    } {1 n greater!} &
 
     c
 } fib=
 
 
-1000 fib!
+100 fib!

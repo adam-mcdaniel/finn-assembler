@@ -6,10 +6,11 @@
         1
     } {
         1 n- factorial! n*
-    } 1 n > ? ! total=
+    } 1 n greater! ? ! total=
 
     total
 } factorial=
+
 
 
 { 
@@ -19,10 +20,10 @@
         total n* total=
 
         1 n- n=
-    } {1 n >} &
+    } {1 n greater!} &
 
     total
 } factorial=
 
 
-10000 factorial! println!
+500 factorial! println!

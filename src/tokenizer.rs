@@ -22,7 +22,12 @@ pub enum Token {
     While,
 
     Add, Div, Mul, Sub,
-    Equal, NotEqual, Greater, Less, Not
+    Equal, NotEqual, Greater, Less, Not,
+
+    Instance,
+    Dot,
+    GetAttr,
+    SetAttr,
     // CallBegin,
     // CallEnd,
     // ArgsBegin,
@@ -57,7 +62,7 @@ pub fn tokenize(script: &str) -> Vec<Token> {
         // .add_fun(Fun::new().eq().not()).store("noteq")
         // .add_fun(Fun::new().not()).store("not")
     let mut tokens = vec![];
-    for token in trim(split(script, vec!["=", " ", "@", "{", "}", ",", "!", "&", "?", ";", "-", "+", "*", "/", "~", "<", ">", "^"])) {
+    for token in trim(split(script, vec!["=", " ", "@", "{", "}", "(", ")", ",", "!", "&", "?", ";", "-", "+", "*", "/", "~", "<", ">", "^", "$", "."])) {
         let result = match token.as_ref() {
             "{" => FunctionBegin,
             "}" => FunctionEnd,
@@ -68,9 +73,11 @@ pub fn tokenize(script: &str) -> Vec<Token> {
             "/" => Div,
             "~" => Equal,
             "^" => NotEqual,
-            "<" => Less,
-            ">" => Greater,
+            "<" => SetAttr,
+            ">" => GetAttr,
+            "." => Dot,
             "!" => Call,
+            "$" => Instance,
             "&" => While,
             "?" => Conditional,
             "@" => ForeignLoad,

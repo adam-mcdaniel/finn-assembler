@@ -37,7 +37,20 @@ fn main() {
         .add_fun(Fun::new().not()).store("not")
     
     // START USER PROGRAM
-    .add_fun(Fun::new().store("n").add_num("1").store("a").add_num("0").store("b").add_num("0").store("c").add_fun(Fun::new().load("a").load("b").add().store("c").load("b").store("a").load("c").store("b").load("c").load("println").call_from_stack().add_num("1").load("n").sub().store("n")).add_fun(Fun::new().add_num("1").load("n").greater()).while_function().load("c")).store("fib").add_num("1000").load("fib").call_from_stack().run()
+    
+		.add_str(">> ")
+		.add_foreign_fun(input)
+		.call_from_stack()
+		.store("user_input")
+		.add_str("You said: '")
+		.load("print")
+		.call_from_stack()
+		.load("user_input")
+		.load("print")
+		.call_from_stack()
+		.add_str("'")
+		.load("println")
+		.call_from_stack().run()
     
     // END USER PROGRAM
 }
