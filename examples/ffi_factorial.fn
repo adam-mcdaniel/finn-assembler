@@ -1,1 +1,1 @@
-100000 factorial@! println!
+"output: " print! 129 factorial@! println!

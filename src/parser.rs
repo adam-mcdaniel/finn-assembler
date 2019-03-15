@@ -81,27 +81,34 @@ pub fn compile_tokens(tokens: Vec<Token>) -> String {
                 result += string(s).as_ref()
             },
             Identifier(s) => {
-                match tokens[(i+1) as usize] {
-                    Assign => {
-                        result += store(s).as_ref();
-                        should_continue = true;
-                    },
-                    ForeignLoad => {
-                        result += load_foreign_function(s).as_ref();
-                        should_continue = true;
-                    },
-                    Dot => {
-                        result += string(&("\"".to_string() + s + "\"")).as_ref();
-                        should_continue = true;
-                    },
-                    _ => {
-                        // match tokens[(i-1) as usize] {
-                        //     Dot => result += string(&("\"".to_string() + s + "\"")).as_ref(),
-                        //     _ => result += load(s).as_ref()
-                        // };
-                        result += load(s).as_ref();
+
+                if tokens.len()-i > 1 {
+                    match tokens[(i+1) as usize] {
+                        Assign => {
+                            result += store(s).as_ref();
+                            should_continue = true;
+                        },
+                        ForeignLoad => {
+                            result += load_foreign_function(s).as_ref();
+                            should_continue = true;
+                        },
+                        Dot => {
+                            result += string(&("\"".to_string() + s + "\"")).as_ref();
+                            should_continue = true;
+                        },
+                        _ => {
+                            // match tokens[(i-1) as usize] {
+                            //     Dot => result += string(&("\"".to_string() + s + "\"")).as_ref(),
+                            //     _ => result += load(s).as_ref()
+                            // };
+                            result += load(s).as_ref();
+                        }
                     }
+                } else {
+                    sub_warn("Unused value loaded at end of program");
+                    result += load(s).as_ref();
                 }
+
             },
             GetAttr => {
                 result += &get_attr();

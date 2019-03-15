@@ -7,6 +7,7 @@ mod stdout;
 mod error;
 
 use file::*;
+use error::*;
 use stdout::*;
 use compile::*;
 
@@ -35,11 +36,23 @@ fn main() {
     
 
     start();
-    sub_debug(&format!("Included crates: {:?}", crates));
-    sub_debug(&format!("Input file to assemble: {:?}", script_file_name));
-    sub_debug(&format!("Debug level: {:?}", debug_level));
+    if debug_level > 0 {
+        sub_debug(&format!("Included crates: {:?}", crates));
+        sub_debug(&format!("Input file to assemble: {:?}", script_file_name));
+        sub_debug(&format!("Debug level: {:?}", debug_level));
+    }
 
+    info("Reading input script");
     let script = read_file(script_file_name);
+
+    if has_thrown_error() {
+        error(
+            &format!("Could not start compilation due to errors")
+        );
+        stop();
+    } else {
+        success("Successfully read input script");
+    }
 
     write_deps(crates.clone());
     write_compiled_script(

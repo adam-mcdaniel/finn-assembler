@@ -1,0 +1,9 @@
+[package]
+name = "fact"
+version = "0.1.0"
+authors = ["adam-mcdaniel <adam.mcdaniel17@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+hlvm = "0.7.0"
+bigdecimal = "0.0.15"
