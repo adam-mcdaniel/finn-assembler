@@ -57,7 +57,7 @@ fn main() {
         // START USER PROGRAM
         
 		.add_str(">> ")
-		.add_foreign_fun(input)
+		.add_foreign_fun(input) // push foreign function `input` to stack
 		.call_from_stack()
 		.store("user_input")
 		.add_str("You said: '")
