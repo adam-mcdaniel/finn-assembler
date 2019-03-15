@@ -1,4 +1,5 @@
-use crate::strings::*;
+use crate::error::*;
+use crate::stdout::*;
 use crate::tokenizer::*;
 use crate::tokenizer::Token::*;
 
@@ -26,14 +27,6 @@ pub fn conditional() -> String {
 
 pub fn while_loop() -> String {
     "\n\t\t.while_function()".to_string()
-}
-
-pub fn begin_args() -> String {
-    ")".to_string()
-}
-
-pub fn end_args() -> String {
-    "".to_string()
 }
 
 pub fn begin_function() -> String {
@@ -64,25 +57,16 @@ pub fn mul() -> String {".mul()".to_string()}
 pub fn div() -> String {".div()".to_string()}
 pub fn equal() -> String {".eq()".to_string()}
 pub fn not_equal() -> String {".eq().not()".to_string()}
-pub fn less() -> String {".less()".to_string()}
-pub fn greater() -> String {".greater()".to_string()}
-
-            // "+" => Add,
-            // "-" => Sub,
-            // "*" => Mul,
-            // "/" => Div,
-            // "~" => Equal,
-            // "^" => NotEqual,
-            // "<" => Less,
-            // ">" => Greater,
+// pub fn less() -> String {".less()".to_string()}
+// pub fn greater() -> String {".greater()".to_string()}
 
 
 pub fn compile_tokens(tokens: Vec<Token>) -> String {
-    // println!("{:?}", tokens);
+    info("Compiling tokens");
+    
     let mut result = "".to_string();
-    let mut in_attrs = false;
     let mut should_continue = false;
-    for i in (0..tokens.len()) {
+    for i in 0..tokens.len() {
 
         if should_continue {
             should_continue = false;
@@ -144,25 +128,27 @@ pub fn compile_tokens(tokens: Vec<Token>) -> String {
                 result += &end_function();
             },
 
-            // "+" => Add,
-            // "-" => Sub,
-            // "*" => Mul,
-            // "/" => Div,
-            // "~" => Equal,
-            // "^" => NotEqual,
-            // "<" => Less,
-            // ">" => Greater,
             Add => {result += &add();},
             Sub => {result += &sub();},
             Mul => {result += &mul();},
             Div => {result += &div();},
             Equal => {result += &equal();},
             NotEqual => {result += &not_equal();},
-            Less => {result += &less();},
-            Greater => {result += &greater();},
+            // Less => {result += &less();},
+            // Greater => {result += &greater();},
 
             _ => {}
         };
+    }
+
+        
+    if has_thrown_error() {
+        error(
+            &format!("Could not compile tokens due to errors")
+        );
+        stop();
+    } else {
+        success("Successfully compiled tokens");
     }
 
     result

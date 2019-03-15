@@ -2,3 +2,4 @@
 **/*.rs.bk
 /hlvm
 /hlvm_runtime
+/out

@@ -1,104 +1,52 @@
 mod strings;
-use strings::*;
-
 mod tokenizer;
-use tokenizer::*;
-
 mod parser;
-use parser::*;
+mod compile;
+mod file;
+mod stdout;
+mod error;
 
-use std::env;
+use file::*;
+use stdout::*;
+use compile::*;
+
+use clap::*;
 
 fn main() {
+    let matches = clap_app!(finn_assembler =>
+            (version: "0.1 Alpha")
+            (author: "Adam McDaniel <adam.mcdaniel17@gmail.com>")
+            (about: "Assembles Finn IR")
+            (@arg INCLUDED_CRATES: -c --crates +takes_value +multiple "Paths of crates to include")
+            (@arg INPUT_FILE: +required "Input Finn IR filename")
+            (@arg debug: -d --debug "Sets the level of debugging information")
+        ).get_matches();
 
-    // println!(
-    //     "is num: {}", is_number("-9.0")
-    // );
-    // println!(
-    //     "is ident: {}", is_identifier("a90")
-    // );
-    // println!(
-    //     "is string: {}", is_string("\"\"")
-    // );
-    // println!(
-    //     "{:?}",
-    //     trim(split("hey {jude}, dont! make it bad", vec!["{", "}", "!", ","]))
-    // );
+    let crates = match matches.values_of("INCLUDED_CRATES") {
+        Some(a) => {
+            let v: Vec<_> = a.map(|s| s.to_string()).collect();
+            v
+        },
+        None => vec![]
+    };
 
-
-    // println!(
-    //     "Fun::new(){}.run()",
-    //     Parser::from_cable_script(
-    //         // "{ \"testing\" } name [\"hey jude\", 1] ".to_string()
-    //         // "println[add[1, 1]]  println[mul[add[1, 1], 5]]".to_string()
-    //         "cube! ".to_string()
-    //     ).compile()
-    // );
-
-
-
-    println!(
-        "#[allow(unused_imports)]\nuse hlvm::function::{{Fun, Value, Object, ForeignFunction, string}};
-        
-
-use std::io;
-use std::io::Write;
-fn get_input(prompt: &str) -> String {{
-    print!(\"{{}}\",prompt);
-    io::stdout().flush().unwrap();
-    let mut input = String::new();
-    match io::stdin().read_line(&mut input) {{
-        Ok(_goes_into_input_above) => {{}},
-        Err(_no_updates_is_fine) => {{}},
-    }}
-    input.trim().to_string()
-}}
-
-#[allow(unused_variables)]
-fn main() {{
+    let script_file_name = matches.value_of("INPUT_FILE").unwrap();
+    let debug_level = matches.occurrences_of("debug");
     
-    let input: ForeignFunction = |v| {{
-        string(&get_input(&v.as_string()))
-    }};
 
+    start();
+    sub_debug(&format!("Included crates: {:?}", crates));
+    sub_debug(&format!("Input file to assemble: {:?}", script_file_name));
+    sub_debug(&format!("Debug level: {:?}", debug_level));
 
-    Fun::new()
-        .add_fun(Fun::new().print()).store(\"print\")
-        .add_fun(Fun::new().println()).store(\"println\")
-        .add_fun(Fun::new().add()).store(\"add\")
-        .add_fun(Fun::new().sub()).store(\"sub\")
-        .add_fun(Fun::new().mul()).store(\"mul\")
-        .add_fun(Fun::new().div()).store(\"div\")
-        .add_fun(Fun::new().less()).store(\"less\")
-        .add_fun(Fun::new().greater()).store(\"greater\")
-        .add_fun(Fun::new().eq()).store(\"eq\")
-        .add_fun(Fun::new().eq().not()).store(\"noteq\")
-        .add_fun(Fun::new().not()).store(\"not\")
-    
-    // START USER PROGRAM
-    {}.run()
-    
-    // END USER PROGRAM
-}}",
-        compile_tokens(
-            // tokenize("(a, b, c){mul[a, mul[b, c]]}   println[add[11.0, 2.0]]")
-            // tokenize("(a){(){println[a]}}[add[2, 2]]")
-            tokenize(&(env::args().collect::<Vec<_>>()[1]).to_string())
-            )
-    );
-    // println!("
-    // Fun::new()
-    //     .add_fun(Fun::new().print()).store(\"print\")
-    //     .add_fun(Fun::new().println()).store(\"println\")
-    //     .add_fun(Fun::new().add()).store(\"add\")
-    //     .add_fun(Fun::new().sub()).store(\"sub\")
-    //     .add_fun(Fun::new().mul()).store(\"mul\")
-    //     .add_fun(Fun::new().div()).store(\"div\")
-    //     .add_fun(Fun::new().less()).store(\"less\")
-    //     .add_fun(Fun::new().greater()).store(\"greater\")
-    //     .add_fun(Fun::new().eq()).store(\"eq\")
-    //     .add_fun(Fun::new().eq().not()).store(\"noteq\")
-    //     .add_fun(Fun::new().not()).store(\"not\")
-        
-    //     {}.run();", compile_tokens(tokenize("\"\" a= a<b 1 a println!")));
+    let script = read_file(script_file_name);
+
+    write_deps(crates.clone());
+    write_compiled_script(
+        compile_script(crates.clone(), script)
+        );
+
+    compile_output_crate();
+
+    done();
 }
