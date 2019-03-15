@@ -29,7 +29,7 @@ incremental = false
 overflow-checks = false
 
 [dependencies]
-hlvm = \"0.7.1\"
+hlvm = \"0.7.2\"
 
 num-traits = \"*\"
 ";
