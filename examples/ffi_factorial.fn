@@ -1,1 +1,1 @@
-"output: " print! 129 factorial@! println!
+2000 factorial@! println!

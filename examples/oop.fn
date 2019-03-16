@@ -6,10 +6,10 @@
 
         "test" println!
         
-        "hey jude" self a.b.c.d.test. < self=
+        "hey jude" self a:b:c:d:test: < self=
 
         self
-    } self a.b.c.d.test. < self =
+    } self a:b:c:d:test: < self =
 
     self println!
 
@@ -17,7 +17,7 @@
 } ! o =
 
 
-o o a.b.c.d.test. > ! o =
+o o a:b:c:d:test: > ! o =
 
 
 o println!

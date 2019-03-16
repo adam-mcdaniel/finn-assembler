@@ -35,7 +35,7 @@ pub fn tokenize(script: &str) -> Vec<Token> {
     info("Tokenizing input script");
 
     let mut tokens = vec![];
-    for token in trim(split(script, vec!["=", " ", "@", "{", "}", "(", ")", ",", "!", "&", "?", ";", "-", "+", "*", "/", "~", "<", ">", "^", "$", "."])) {
+    for token in trim(split(script, vec!["=", " ", "@", "{", "}", "(", ")", "!", "&", "?", ";", "-", "+", "*", "/", "~", "<", ">", "^", "$", ":"])) {
         let result = match token.as_ref() {
             "{" => FunctionBegin,
             "}" => FunctionEnd,
@@ -48,14 +48,13 @@ pub fn tokenize(script: &str) -> Vec<Token> {
             "^" => NotEqual,
             "<" => SetAttr,
             ">" => GetAttr,
-            "." => Dot,
+            ":" => Dot,
             "!" => Call,
             "$" => Instance,
             "&" => While,
             "?" => Conditional,
             "@" => ForeignLoad,
             ";" => EndStatement,
-            "," => NONE,
             s => {
                 if is_number(&s) {
                     Num(s.to_string())

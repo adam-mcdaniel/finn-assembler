@@ -1,6 +1,5 @@
 {
     n=
-
     1 a=
     0 b=
     0 c=
@@ -10,13 +9,12 @@
         b a=
         c b=
 
-        c println!
-
+        "iteration " print! n print! "  " print! c println!
         1 n-n=
-    } {1 n greater!} &
+    } {0 n greater!} &
 
     c
 } fib=
 
 
-100 fib!
+29404 fib!
