@@ -1,0 +1,23 @@
+"link structs crate in include/"
+
+[
+    0 "x"
+    
+    {
+        self=
+
+        self x: > 1 + self x: < self =
+        "im a method!" println!
+        self
+    }    "method"
+
+    {
+        "im a static method!" println!
+    }    "static_method"
+] strukt@! s=
+
+
+s x: > println!
+s s method: > ! s=
+s x: > println!
+s static_method: > !

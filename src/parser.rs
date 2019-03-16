@@ -50,6 +50,8 @@ pub fn load_foreign_function(name: &str) -> String {
 pub fn get_attr() -> String {"\n\t\t.get_attr()".to_string()}
 pub fn set_attr() -> String {"\n\t\t.set_attr()".to_string()}
 
+pub fn list_begin() -> String {"\n\t\t.add_list_from_fun(Fun::new()".to_string()}
+pub fn list_end() -> String {")".to_string()}
 pub fn instance() -> String {"\n\t\t.add_obj()".to_string()}
 pub fn add() -> String {".add()".to_string()}
 pub fn sub() -> String {".sub()".to_string()}
@@ -74,6 +76,13 @@ pub fn compile_tokens(tokens: Vec<Token>) -> String {
         }
 
         match &tokens[i] {
+            ListBegin => {
+                result += list_begin().as_ref();
+            },
+            ListEnd => {
+                result += list_end().as_ref();
+            },
+
             Num(n) => {
                 result += number(n).as_ref()
             },
@@ -147,6 +156,8 @@ pub fn compile_tokens(tokens: Vec<Token>) -> String {
             _ => {}
         };
     }
+
+
 
         
     if has_thrown_error() {

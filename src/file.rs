@@ -30,7 +30,7 @@ overflow-checks = false
 
 [dependencies]
 hlvm = {path=\"../hlvm\"}
-# hlvm = \"0.7.2\"
+# hlvm = \"0.8.0\"
 
 num-traits = \"*\"
 ";

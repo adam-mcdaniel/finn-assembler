@@ -14,6 +14,8 @@ pub enum Token {
     NONE,
 
 
+    ListBegin,
+    ListEnd,
     FunctionBegin,
     FunctionEnd,
     Call,
@@ -35,10 +37,12 @@ pub fn tokenize(script: &str) -> Vec<Token> {
     info("Tokenizing input script");
 
     let mut tokens = vec![];
-    for token in trim(split(script, vec!["=", " ", "@", "{", "}", "(", ")", "!", "&", "?", ";", "-", "+", "*", "/", "~", "<", ">", "^", "$", ":"])) {
+    for token in trim(split(script, vec![",", "=", " ", "@", "{", "}", "[", "]", "(", ")", "!", "&", "?", ";", "-", "+", "*", "/", "~", "<", ">", "^", "$", ":"])) {
         let result = match token.as_ref() {
             "{" => FunctionBegin,
             "}" => FunctionEnd,
+            "[" => ListBegin,
+            "]" => ListEnd,
             "=" => Assign,
             "+" => Add,
             "-" => Sub,
@@ -54,7 +58,8 @@ pub fn tokenize(script: &str) -> Vec<Token> {
             "&" => While,
             "?" => Conditional,
             "@" => ForeignLoad,
-            ";" => EndStatement,
+            "," => NONE,
+            ";" => NONE,
             s => {
                 if is_number(&s) {
                     Num(s.to_string())

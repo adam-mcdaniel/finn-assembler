@@ -26,6 +26,16 @@ fn main() {{
         .add_fun(Fun::new().eq()).store(\"eq\")
         .add_fun(Fun::new().eq().not()).store(\"noteq\")
         .add_fun(Fun::new().not()).store(\"not\")
+        .add_fun(
+            Fun::new()
+                .get_parameter(\"index\")
+                .get_parameter(\"list\")
+                .load(\"index\")
+                .load(\"list\")
+                .index()
+        ).store(\"at\")
+        .add_fun(Fun::new().pop_list()).store(\"pop\")
+        .add_fun(Fun::new().append_list()).store(\"push\")
     
         // START USER PROGRAM
         {}.run()
