@@ -110,7 +110,8 @@ pub fn sub_error(s: &str) {
 
 
 pub fn info(s: &str) {
-    print!("===( INFO )====> ");
+    // print!("===( INFO )====> ");
+    print!("==> ");
     print_color(
         format!("{}", s),
         Some(BRIGHT_BLUE),

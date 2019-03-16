@@ -29,8 +29,8 @@ incremental = false
 overflow-checks = false
 
 [dependencies]
-hlvm = {path=\"../hlvm\"}
-# hlvm = \"0.8.0\"
+# hlvm = {path=\"../hlvm\"}
+hlvm = \"0.9.0\"
 
 num-traits = \"*\"
 ";
