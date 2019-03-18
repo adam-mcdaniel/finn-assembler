@@ -3,6 +3,9 @@ name = "finn-assembler"
 version = "0.1.0"
 authors = ["adam"]
 edition = "2018"
+license = "MIT"
+description = "The Finn IR Assembler"
+
 
 [dependencies]
 regex = "1"
