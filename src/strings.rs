@@ -4,12 +4,11 @@ use regex::Regex;
 pub fn split(s: &str, delims: Vec<&str>) -> Vec<String> {
     let mut result = vec![];
     let mut current_token = "".to_string();
-    let mut number_of_quotes = 0;
     for ch in s.chars() {
         current_token.push(ch);
         if ch == '"' {
-            number_of_quotes += 1;
-        } else if number_of_quotes % 2 == 0 {
+
+        } else if !is_last_char_in_string(&current_token) {
             for delim in delims.clone() {
                 if current_token.contains(delim) {
                     for _ in 0..delim.len() {
@@ -51,7 +50,32 @@ pub fn is_identifier(s: &str) -> bool {
 
 pub fn is_string(s: &str) -> bool {
     let re = Regex::new("^\"[^\"\\\\]*(\\\\.[^\"\\\\]*)*\"$").unwrap();
+    // let re = Regex::new("\"([^\\\\\"]+|\\.)*\"|'([^\\\\\']+|\\.)*'").unwrap();
     re.is_match(s)
+}
+
+pub fn is_last_char_in_string(s: &str) -> bool {
+    let re = Regex::new("\"[^\"\\\\]*(\\\\.[^\"\\\\]*)*\"").unwrap();
+    // let re = Regex::new("\"([^\\\\\"]+|\\.)*\"|'([^\\\\\']+|\\.)*'").unwrap();
+
+    // let matches: Vec<_> = re.matches(s).into_iter().collect();
+    let mut len_original = 0;
+    for _ in re.captures_iter(&s) {
+        len_original += 1;
+    }
+
+    let mut len_test = 0;
+    let mut test_string = s.to_string();
+    
+    while test_string.chars().nth(test_string.len()-1) == Some('\\') {
+        test_string.pop();
+    }
+
+    for _ in re.captures_iter(&(test_string.clone() + "\"")) {
+        len_test += 1;
+    }
+
+    len_test > len_original
 }
 
 

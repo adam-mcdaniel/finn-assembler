@@ -32,7 +32,21 @@ fn print_color(s: String, fg: Option<Color>, bg: Option<Color>) {
 }
 
 
+pub fn title() {
+    print_color(
+        "     dBBBBP dBP dBBBBb  dBBBBb     dBBBBBb  .dBBBBP   dBBBBBBb
+                   dBP     dBP          BB  BP             dBP
+   dBBBP  dBP dBP dBP dBP dBP       dBP BB  `BBBBb  dBPdBPdBP 
+  dBP    dBP dBP dBP dBP dBP       dBP  BB     dBP dBPdBPdBP  
+ dBP    dBP dBP dBP dBP dBP       dBBBBBBBdBBBBP' dBPdBPdBP   ".to_string(),
+        Some(WHITE),
+        None
+    );
+    println!("");
+}
+
 pub fn start() {
+    // title();
     print!("===[ START ]===> ");
     print_color(
         "Assembling".to_string(),
