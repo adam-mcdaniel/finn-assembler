@@ -1,4 +1,5 @@
 use crate::file::*;
+use crate::check::*;
 use crate::parser::*;
 use crate::tokenizer::*;
 
@@ -41,7 +42,7 @@ fn main() {{
         {}.run()
 
         // END USER PROGRAM
-}}", imports, compile_tokens(tokenize(&script)))
+}}", imports, compile_tokens(error_check(tokenize(&script))))
 }
         
  

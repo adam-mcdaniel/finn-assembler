@@ -5,6 +5,7 @@ mod compile;
 mod file;
 mod stdout;
 mod error;
+mod check;
 
 use file::*;
 use error::*;

@@ -122,6 +122,16 @@ pub fn sub_error(s: &str) {
     println!("");
 }
 
+pub fn sub_error_info(s: &str) {
+    print!("\t\t   └─> ");
+    print_color(
+        format!("{}", s),
+        Some(BRIGHT_RED),
+        None
+    );
+    println!("");
+}
+
 
 pub fn info(s: &str) {
     // print!("===( INFO )====> ");

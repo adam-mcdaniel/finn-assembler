@@ -33,6 +33,44 @@ pub enum Token {
 }
 
 
+pub fn tokens_to_string(tokens: Vec<Token>) -> String {
+    // info("Tokenizing input script");
+    let mut result = "".to_string();
+    for token in &tokens {
+        result += &(match token {
+            FunctionBegin => "{".to_string(),
+            FunctionEnd => "}".to_string(),
+            ListBegin => "[".to_string(),
+            ListEnd => "]".to_string(),
+            Assign => "=".to_string(),
+            Add => "+".to_string(),
+            Sub => "-".to_string(),
+            Mul => "*".to_string(),
+            Div => "/".to_string(),
+            Equal => "~".to_string(),
+            NotEqual => "^".to_string(),
+            SetAttr => "<".to_string(),
+            GetAttr => ">".to_string(),
+            Dot => ":".to_string(),
+            Call => "!".to_string(),
+            Instance => "$".to_string(),
+            While => "&".to_string(),
+            Conditional => "?".to_string(),
+            ForeignLoad => "@".to_string(),
+            EndStatement => ";".to_string(),
+            Num(s) => s.to_string(),
+            Str(s) => s.to_string(),
+            // Str(s) => {
+            //     ("\"".to_string() + &s + "\"").to_string()
+            // },
+            Identifier(s) => s.to_string(),
+            _ => "".to_string()
+        } + " ");
+    }
+    result
+}
+
+
 pub fn tokenize(script: &str) -> Vec<Token> {
     info("Tokenizing input script");
 
@@ -59,7 +97,7 @@ pub fn tokenize(script: &str) -> Vec<Token> {
             "?" => Conditional,
             "@" => ForeignLoad,
             "," => NONE,
-            ";" => NONE,
+            ";" => EndStatement,
             s => {
                 if is_number(&s) {
                     Num(s.to_string())
