@@ -1,20 +1,5 @@
 { 
     n=
-    "n is " print! n println!
-
-    {
-        1
-    } {
-        1 n- factorial! n*
-    } 1 n greater! ? ! total=
-
-    total
-} factorial=
-
-
-
-{ 
-    n=
     1 total=
     {
         total n* total=
