@@ -57,7 +57,7 @@ pub fn start() {
 }
 
 pub fn success(s: &str) {
-    print!("\t   └─> ");
+    print!("\t└─> ");
     // print!("==| SUCCESS |==> ");
     print_color(
         format!("{}", s),
@@ -92,7 +92,7 @@ pub fn warn(s: &str) {
 
 #[allow(dead_code)]
 pub fn sub_warn(s: &str) {
-    print!("\t   └─> ");
+    print!("\t└─> ");
     print_color(
         format!("{}", s),
         Some(YELLOW),
@@ -113,7 +113,7 @@ pub fn error(s: &str) {
 }
 
 pub fn sub_error(s: &str) {
-    print!("\t   └─> ");
+    print!("\t└─> ");
     print_color(
         format!("{}", s),
         Some(BRIGHT_RED),
@@ -123,7 +123,7 @@ pub fn sub_error(s: &str) {
 }
 
 pub fn sub_error_info(s: &str) {
-    print!("\t\t   └─> ");
+    print!("\t\t└─> ");
     print_color(
         format!("{}", s),
         Some(BRIGHT_RED),
@@ -145,7 +145,7 @@ pub fn info(s: &str) {
 }
 
 pub fn sub_info(s: &str) {
-    print!("\t   └─> ");
+    print!("\t└─> ");
     print_color(
         format!("{}", s),
         Some(CYAN),
@@ -167,7 +167,7 @@ pub fn debug(s: &str) {
 }
 
 pub fn sub_debug(s: &str) {
-    print!("\t   └─> ");
+    print!("\t└─> ");
     print_color(
         format!("{}", s),
         Some(BRIGHT_YELLOW),

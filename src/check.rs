@@ -10,7 +10,7 @@ const SNIPPET_SIZE: usize = 10;
 fn print_snippet(tokens: &Vec<Token>, i: usize) {
     let i = max(SNIPPET_SIZE/2, i);
     sub_error_info(
-        &format!("{}", tokens_to_string(tokens.clone()[max(i-SNIPPET_SIZE/2, 0)..min(i+SNIPPET_SIZE/2, tokens.len()-1)].to_vec()))
+        &format!("{}", tokens_to_string(tokens.clone()[max(i-SNIPPET_SIZE/2, 0)..min(i+SNIPPET_SIZE/2, tokens.len())].to_vec()))
     );
 }
 
@@ -98,10 +98,29 @@ fn find_unmatched_lists(tokens: &Vec<Token>) {
 }
 
 
+fn find_unexpected(tokens: &Vec<Token>) {
+    sub_info(&format!("Checking for invalid tokens..."));
+
+    for (i, token) in tokens.iter().enumerate() {
+        match token {
+            UnExpected(s) => {
+                sub_error(
+                    &format!("Unexpected '{}' at instruction #{}", s, i)
+                );
+                print_snippet(tokens, i);
+                throw();
+            },
+            _ => {}
+        };
+    }
+}
+
+
 
 pub fn error_check(tokens: Vec<Token>) -> Vec<Token> {
     info(&format!("Performing compile time error checks"));
 
+    find_unexpected(&tokens);
     find_unmatched_functions(&tokens);
     find_unmatched_lists(&tokens);
 

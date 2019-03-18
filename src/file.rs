@@ -100,26 +100,34 @@ fn copy_folder(folder_path: &str, new_folder_path: &str) {
 
 
 fn make_output_crate() {
+    sub_info(
+        &format!("Creating output crate")
+    );
     if Path::new(OUTPUT_CRATE).exists() {
         sub_info(
             &format!("Output crate already exists")
         );
         
     } else {
-        sub_info(
-            &format!("Creating output crate...")
-        );
-
-        Command::new("cargo")
+        match Command::new("cargo")
             .current_dir(".")
             .arg("new")
             .arg(OUTPUT_CRATE)
             .output()
-            .expect("Could not create output crate");
+            {
+            Ok(_) => {
+                sub_info(
+                    &format!("Created output crate")
+                );
+            },
+            Err(_) => {
+                sub_error(
+                    &format!("Could not create output crate; do you have Rust installed? You can install it with this command: `curl https://sh.rustup.rs -sSf | sh`")
+                );
+                throw();
+            }
+        };
 
-        sub_info(
-            &format!("Created output crate")
-        );
     }
 }
 

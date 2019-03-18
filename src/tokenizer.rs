@@ -8,11 +8,11 @@ pub enum Token {
     Str(String),
     Num(String),
     Identifier(String),
+    UnExpected(String),
+    NONE,
     Assign,
     ForeignLoad,
     EndStatement,
-    NONE,
-
 
     ListBegin,
     ListEnd,
@@ -60,11 +60,9 @@ pub fn tokens_to_string(tokens: Vec<Token>) -> String {
             EndStatement => ";".to_string(),
             Num(s) => s.to_string(),
             Str(s) => s.to_string(),
-            // Str(s) => {
-            //     ("\"".to_string() + &s + "\"").to_string()
-            // },
+            UnExpected(s) => s.to_string(),
             Identifier(s) => s.to_string(),
-            _ => "".to_string()
+            NONE => "".to_string(),
         } + " ");
     }
     result
@@ -96,7 +94,7 @@ pub fn tokenize(script: &str) -> Vec<Token> {
             "&" => While,
             "?" => Conditional,
             "@" => ForeignLoad,
-            "," => NONE,
+            "," => UnExpected(",".to_string()),
             ";" => EndStatement,
             s => {
                 if is_number(&s) {
@@ -111,8 +109,10 @@ pub fn tokenize(script: &str) -> Vec<Token> {
                         throw();
                     }
                     Identifier(s.to_string())
-                } else {
+                } else if s == "" {
                     NONE
+                } else {
+                    UnExpected(s.to_string())
                 }
             }
         };
