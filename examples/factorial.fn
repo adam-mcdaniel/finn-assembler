@@ -26,4 +26,4 @@
 } factorial=
 
 
-500 factorial! println!
+1500 factorial! println!
