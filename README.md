@@ -159,3 +159,5 @@ s s println: > !
 ```
 
 ## Install
+
+To install the `Finn-assembler`, clone the Finn-assembler repo, and run the `install.sh` file.
