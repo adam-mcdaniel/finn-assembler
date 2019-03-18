@@ -1,6 +1,6 @@
 [package]
 name = "finn-assembler"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["adam"]
 edition = "2018"
 license = "MIT"
