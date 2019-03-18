@@ -40,6 +40,22 @@ Calculates _n_ factorial.
 1500 factorial! println!
 ```
 
+### Lambda Calculus
+
+Demonstrates use of Lambda Calculus in Finn IR.
+
+`./fn examples/lambda.fn`
+
+```rust
+{a= {b= a}} True = 
+{a= {b= b}} False = 
+
+{p= {q= p q p!!}} And=
+
+
+{ "is false!" println! } { "is true!" println! } True True And!!!!!
+```
+
 
 ### User Input
 
