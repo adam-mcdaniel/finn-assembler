@@ -9,6 +9,7 @@ readme = "README.md"
 repository = "https://github.com/adam-mcdaniel/finn-assembler"
 documentation = "https://docs.rs/finn-assembler"
 
+
 [dependencies]
 regex = "1"
 clap = "2"

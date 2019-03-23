@@ -10,5 +10,4 @@
     total
 } factorial=
 
-
 1500 factorial! println!
