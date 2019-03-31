@@ -1,6 +1,6 @@
 [package]
 name = "finn-assembler"
-version = "0.1.5"
+version = "0.2.0"
 authors = ["adam"]
 edition = "2018"
 license = "MIT"
@@ -8,6 +8,10 @@ description = "The Finn IR Assembler"
 readme = "README.md"
 repository = "https://github.com/adam-mcdaniel/finn-assembler"
 documentation = "https://docs.rs/finn-assembler"
+
+[[bin]]
+path = "src/main.rs"
+name = "fn"
 
 
 [dependencies]
