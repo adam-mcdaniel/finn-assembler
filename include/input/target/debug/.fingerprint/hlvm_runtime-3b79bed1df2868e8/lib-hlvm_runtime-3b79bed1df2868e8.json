@@ -1,0 +1,1 @@
+{"rustc":15213319881204273412,"features":"[]","target":4923713007430632138,"profile":6754758623304572344,"path":15683750460541215031,"deps":[["decimal v2.0.4","decimal",13667621119267105310]],"local":[{"MtimeBased":[[1554476690,693172000],".fingerprint/hlvm_runtime-3b79bed1df2868e8/dep-lib-hlvm_runtime-3b79bed1df2868e8"]}],"rustflags":[],"edition":"Edition2018"}

@@ -1,0 +1,60 @@
+
+{range_rs@!} range =
+
+{
+  fn =
+  list =
+
+  [ list fn ] map_rs@!
+} map = 
+
+{
+  i =
+  i 5 *
+  i println!
+} f = 
+
+50 range! f map! println!
+
+
+{
+  cond =
+  false_fun =
+  true_fun =
+
+  false_fun true_fun cond ? !
+} if =
+
+
+
+{&} while = 
+
+
+
+"> " input@! user_input = 
+
+
+{
+  "they are eq!" println!
+} {
+  "they not eq :(" println!
+} "testing!" user_input eq! if!
+
+
+
+1 n =
+{
+  n println!
+  0 n =
+  n println!
+} {n 1 eq!} while!
+
+
+
+
+{ a= b= a } True = 
+{ a= b= b } False = 
+
+
+
+6 5 False! println!
