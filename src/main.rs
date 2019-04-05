@@ -17,7 +17,7 @@ use clap::*;
 
 fn main() {
     let matches = clap_app!(finn_assembler =>
-            (version: "0.1 Alpha")
+            (version: "0.2.1")
             (author: "Adam McDaniel <adam.mcdaniel17@gmail.com>")
             (about: "Assembles Finn IR into Rust using the HLVM as a backend")
             (@arg INCLUDED_CRATES: -c --crates +takes_value +multiple "Paths of crates to include")
